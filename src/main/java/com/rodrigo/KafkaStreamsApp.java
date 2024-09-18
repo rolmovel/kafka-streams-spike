@@ -33,8 +33,6 @@ public class KafkaStreamsApp {
                 .groupBy((key, word) -> word)
                 .count(Materialized.as("Counts"));
         wordCounts.toStream().foreach((key, value) -> System.out.println("Key = " + key + ", Value = " + value));
-        // Escribir la salida en otro tópico
-        wordCounts.toStream().to("output-topic");
 
         KafkaStreams streams = new KafkaStreams(builder.build(), props);
         streams.start();
